@@ -25,3 +25,40 @@ class Ingredient:
         if not isinstance(other, Ingredient):
             return False
         return (self.name == other.name and self.unit == other.unit)
+
+
+class Recipe:
+    def __init__(self, title: str, ingredients: list[Ingredient]) -> None:
+        self.title = title
+        self.ingredients = ingredients
+
+    def add_ingredient(self, ingredient: Ingredient) -> None:
+        flag = False
+        for ing in self.ingredients:
+            if ing == ingredient:
+                ing.quantity += ingredient.quantity
+                flag = True
+                break
+        if not flag:
+            self.ingredients.append(ingredient)
+
+    @staticmethod
+    def is_valid_ratio(ratio) -> bool:
+        if isinstance(ratio, (int, float)) and ratio > 0:
+            return True
+        return False
+
+    def scale (self, ratio: float) -> "Recipe":
+        if not Recipe.is_valid_ratio(ratio):
+            raise ValueError("Коэффициент масштабирования должен быть положительным числом")
+
+        new_recipe = Recipe(self.title, [])
+        for ingredient in self.ingredients:
+            new_recipe.add_ingredient(Ingredient(ingredient.name, ingredient.quantity * ratio, ingredient.unit))
+        return new_recipe
+
+    def __len__(self) -> int:
+        return len(self.ingredients)
+
+    def __str__(self) -> str:
+       return f"{self.title}:\n" + "\n".join(str(ing) for ing in self.ingredients) 
