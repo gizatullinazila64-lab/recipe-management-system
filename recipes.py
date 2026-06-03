@@ -115,7 +115,7 @@ class ShoppingList:
 
 class DietaryRecipe(Recipe):
     
-    def __init__(self, title: str, diet_type: str, ingredients = Non) -> None:
+    def __init__(self, title: str, diet_type: str, ingredients = None) -> None:
         super().__init__(title, ingredients)
         self.diet_type = diet_type
 
