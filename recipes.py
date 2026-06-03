@@ -1,4 +1,5 @@
 class Ingredient:
+
     def __init__(self, name: str, quantity: float, unit: str) -> None:
         self.name = name
         self.quantity = quantity
@@ -28,6 +29,7 @@ class Ingredient:
 
 
 class Recipe:
+
     def __init__(self, title: str, ingredients: list[Ingredient]) -> None:
         self.title = title
         self.ingredients = ingredients
@@ -65,6 +67,7 @@ class Recipe:
 
 
 class ShoppingList:
+
     def __init__(self) -> None:
         self._items = []
 
@@ -108,3 +111,20 @@ class ShoppingList:
             new_list._items.append(item)
 
         return new_list
+
+
+class DietaryRecipe(Recipe):
+    
+    def __init__(self, title: str, diet_type: str, ingredients = Non) -> None:
+        super().__init__(title, ingredients)
+        self.diet_type = diet_type
+
+    def scale(self, ratio: float) -> "DietaryRecipe":
+        if not Recipe.is_valid_ratio(ratio):
+            raise ValueError("Коэффициент масштабирования должен быть положительным числом")
+
+        new_recipe = super().scale(ratio)
+        return DietaryRecipe(new_recipe.title, self.diet_type, new_recipe.ingredients)
+
+    def __str__(self) -> str:
+        return f"[{self.diet_type}] " + super().__str__()
