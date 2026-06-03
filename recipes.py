@@ -10,17 +10,18 @@ class Ingredient:
 
     @quantity.setter
     def quantity(self, value) -> None:
+        value = float(value)
         if value <= 0:
-            raise ValueError("Колличество должно быть положительным")
-        self._quantity = float(value)
+            raise ValueError("Количество должно быть положительным")
+        self._quantity = value
 
     def __str__(self) -> str:
         return f"{self.name}: {self.quantity} {self.unit}"
 
     def __repr__(self) -> str:
-        return f"Ingredient('{self.name}', '{self.quantity}', '{self.unit}')"
+        return f"Ingredient('{self.name}', {self.quantity}, '{self.unit}')"
     
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: "Ingredient") -> bool:
         if not isinstance(other, Ingredient):
             return False
         return (self.name == other.name and self.unit == other.unit)
